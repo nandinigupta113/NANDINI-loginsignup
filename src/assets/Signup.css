@@ -1,0 +1,64 @@
+.box2{
+    z-index: 1;
+    background-color: white;
+    box-shadow: 0px 4px  4px rgb(99, 93, 93);
+    border-radius: 4px;
+    margin-top:1.5rem;
+    margin-left: 5rem;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+@media(min-width:100px) and (max-width:900px){
+.box2{
+    margin: 0px;
+    margin-top: 2rem;
+}
+.insidd:first-child{
+    display:grid;
+    grid-template-columns:repeat(1,auto)
+}
+
+}
+
+
+.boxess{
+    margin: 1rem;
+}
+.boxess input{
+    background: #C4C4C4;
+    border-radius: 10px;
+    width: 20rem;
+    height: 56px;
+    font-size: 1.5rem;
+    text-align: center;
+    border:none;
+    outline: none;
+}
+.boxess input::placeholder{
+    /* color: black; */
+}
+.boxess select{
+    background: #C4C4C4;
+    border-radius: 10px;
+    width: 323px;
+    height: 56px;
+    font-size: 1.5rem;
+    text-align: center;
+    border:none;
+}
+.insidd{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+.gender label{
+    font-size: 1.7rem;
+    margin: 1rem;
+    margin-right: 0.2rem;
+}
+.gender input{
+    height: 2rem;
+    width: 2rem;
+}
+.captcha2{
+    margin-left:1.5rem;
+}

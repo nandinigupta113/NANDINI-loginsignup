@@ -1,0 +1,67 @@
+.box{
+        z-index: 1;
+        background-color: white;
+        box-shadow: 0px 4px  4px rgb(99, 93, 93);
+        border-radius: 4px;
+        margin-top:5rem;
+        margin-left: 15rem;
+        padding: 2rem;
+}
+@media(min-width:100px) and (max-width:900px){
+    .box{
+        margin: 0px;
+        margin-top: 2rem;
+    }
+}
+.heading, .msg, .mbno{
+    display: flex;
+    justify-content: center;
+}
+.insidebox{
+    margin:1rem;
+}
+.head{
+    font-size: 2.5rem;
+}
+.msg,.mbno{
+    font-size: 1rem;
+}
+.otp{
+    margin-top:2rem;
+    margin-bottom: 2rem;;
+}
+.otpdig{
+    background-color:  #E5E5E5;
+    outline: none;
+    border: none;
+    height: 50px;
+    width:50px;
+    margin:15px;
+    font-size: 40px;
+    text-align: center;
+}
+.resend{
+    display: flex;
+    justify-content: end;
+    color:#6B6B6B;
+}
+.rsnd{
+    font-size: 25px;
+}
+.bttns2{
+    display: block;
+    margin: auto;
+    background: linear-gradient(90deg, #52D1F9 3.53%, #E563F8 77.4%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    padding: 0.4rem;
+    margin-top:50px;
+    margin-bottom: 50px;
+    font-size: 1.3rem;
+    color: white;
+    width:15rem;
+    border: none;
+}
+.otp{
+    color: red;
+}
