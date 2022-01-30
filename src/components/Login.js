@@ -44,6 +44,7 @@ function Login(){
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
             setSubmitForm(true);
+            // props.setLoggedIn(true);
         }
        }, [errors]);
     

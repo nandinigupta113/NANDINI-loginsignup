@@ -1,3 +1,4 @@
+import axios from "axios";
 import react,{useState ,useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "../assets/Otpverify.css"
@@ -45,6 +46,8 @@ function Otpverif(){
     }
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
+            axios.get(`/otp-send?phonenumber=917818052057&channel=${parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp3)}`)
+            .then(response => {console.log(response.data)});  
             setSubmitForm(true);
         }
     }, [errors]);
@@ -64,10 +67,10 @@ function Otpverif(){
             </div>
             <div className="otp">
             <div>
-                <input className="otpdig" name="otp1" autocomplete="off" onChange={handleChange} value={isotp.otp1} type="text" maxLength="1"/>
-                <input className="otpdig" name="otp2" autocomplete="off" onChange={handleChange} value={isotp.otp2}type="text" maxLength="1"/>
-                <input className="otpdig" name="otp3" autocomplete="off" onChange={handleChange} value={isotp.otp3}type="text" maxLength="1"/>
-                <input className="otpdig" name="otp4" autocomplete="off" onChange={handleChange} value={isotp.otp4}type="text" maxLength="1"/>
+                <input className="otpdig" name="otp1" autoComplete="off" onChange={handleChange} value={isotp.otp1} type="text" maxLength="1"/>
+                <input className="otpdig" name="otp2" autoComplete="off" onChange={handleChange} value={isotp.otp2}type="text" maxLength="1"/>
+                <input className="otpdig" name="otp3" autoComplete="off" onChange={handleChange} value={isotp.otp3}type="text" maxLength="1"/>
+                <input className="otpdig" name="otp4" autoComplete="off" onChange={handleChange} value={isotp.otp4}type="text" maxLength="1"/>
             </div>
             {errors.otp1 || errors.otp2 || errors.otp3 || errors.otp4 && <p>{errors.otp1}</p>}
             </div>

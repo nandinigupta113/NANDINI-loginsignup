@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Otpverif from './components/Otpverif';
 import Forgotpassw from './components/Forgotpassw';
+// import ProtectedRoutes from "./components/ProtectedRoutes";
 import {
   BrowserRouter as 
   Router, Routes, Route
@@ -16,9 +17,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
+        {/* <Route element={<ProtectedRoutes/>}> */}
         <Route path="/home" element={<Home/>}/>
         <Route path="/otpverify" element={<Otpverif/>}/>
         <Route path="/forgotpassw" element={<Forgotpassw/>}/>
+        {/* </Route> */}
       </Routes>
     </Router>
     </div>

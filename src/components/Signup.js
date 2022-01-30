@@ -3,23 +3,25 @@ import {Link, useNavigate} from "react-router-dom";
 import validation from "./validation";
 import Recaptcha from "react-recaptcha";
 import "../assets/Signup.css"
-
+import axios from 'axios';
+window.onunload = function() { debugger; }
 function Signup() {
+
     const navigate = useNavigate();
     const [dataIsCorrect, setDataIsCorrect] = useState(false);
     const [submitform, setSubmitForm] = useState(false);
-
     const [values, setValues] = useState({
-        fullname:"",
+        name:"",
         email: "",
+        rollnum:"",
         password:"",
-        userid:"",
+        phone:"",
         address:"",
         year:"1 year",
-        branch:"CS",
-        gender:"Male",
-        contact:"",
+        branch:"Computer Science",
+        gen:"Male",
         isverify: false,
+        confirmpassword: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -37,6 +39,21 @@ function Signup() {
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
             setSubmitForm(true);
+            axios.post("/register", {
+                name: values.name,
+                email: values.email,
+                rollnum:parseInt(values.rollnum),
+                password:values.password,
+                phone:parseInt(values.phone),
+                address:values.address,
+                year:parseInt(values.year),
+                branch:values.branch,
+                gen:values.gen,
+                confirmpassword:values.confirmpassword
+            })
+                .then(response => {console.log(response.data)});  
+             axios.get("/otp-send?phonenumber=917818052057&channel=sms")
+                .then(response => {console.log(response.data)});   
         }
     }, [errors]);
 
@@ -60,13 +77,13 @@ function Signup() {
       <form>
           <div className="insidd">
           <div className="boxess">
-              <input type="text"autoComplete="off" placeholder="Name" name="fullname" onChange={handleChange} value={values.fullname}/>
-              {errors.fullname && <p className="error">{errors.fullname}</p>}
+              <input type="text"autoComplete="off" placeholder="Name" name="name" onChange={handleChange} value={values.name}/>
+              {errors.name && <p className="error">{errors.name}</p>}
           </div>
 
           <div className="boxess">
-              <input type="text"autoComplete="off"  placeholder="UserId" name="userid" onChange={handleChange} value={values.userid}/>
-              {errors.userid && <p className="error">{errors.userid}</p>}
+              <input type="text"autoComplete="off"  placeholder="UserId" name="rollnum" onChange={handleChange} value={values.rollnum}/>
+              {errors.rollnum && <p className="error">{errors.rollnum}</p>}
           </div>
           <div className="boxess">
               <select name="branch"onChange= {handleChange}>
@@ -91,10 +108,15 @@ function Signup() {
               {errors.email && <p className="error">{errors.email}</p>}
           </div>
   
+          <div className="boxess">
+              <input type="text" autoComplete="off" placeholder="Confirm Password" name="confirmpassword" onChange={handleChange} value={values.confirmpassword}/>
+              {errors.confirmpassword && <p className="error">{errors.confirmpassword}</p>}
+          </div>
+
           <div className="gender">
               <label>Gender:</label>
-               <label>Male</label><input autoComplete="off"  type="radio" value="Male" name="gender" checked={values.gender === "Male"} onChange={handleChange} />
-               <label>Female</label><input autoComplete="off" type="radio" value="Female" name="gender"checked={values.gender === "Female"} onChange= {handleChange} />
+               <label>Male</label><input autoComplete="off"  type="radio" value="Male" name="gen" checked={values.gen === "Male"} onChange={handleChange} />
+               <label>Female</label><input autoComplete="off" type="radio" value="Female" name="gen"checked={values.gen === "Female"} onChange= {handleChange} />
           </div>
 
 
@@ -118,8 +140,8 @@ function Signup() {
             </div>
 
           <div className="boxess">
-              <input type="text" autoComplete="off" placeholder="Contact no." name="contact" onChange={handleChange} value={values.contact}/>
-              {errors.contact && <p className="error">{errors.contact}</p>}
+              <input type="text" autoComplete="off" placeholder="Contact no." name="phone" onChange={handleChange} value={values.phone}/>
+              {errors.phone && <p className="error">{errors.phone}</p>}
           </div>
           </div>
 
