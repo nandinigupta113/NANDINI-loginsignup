@@ -2,7 +2,7 @@ import react,{useState ,useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "../assets/Forgotpassw.css"
 import psswd from "../assets/psswd.png";
-
+import axios from 'axios';
 function Forgotpassw(){
     const navigate = useNavigate();
     const [dataIsCorrect, setDataIsCorrect] = useState(false);
@@ -37,7 +37,11 @@ function Forgotpassw(){
     }
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
-            setSubmitForm(true);
+            axios.post("/password-forgot", {
+                email : confrmuserid.userid
+             })
+                 .then(response => {if(response.data){setSubmitForm(true)}console.log(response.data)})
+                 .catch(error =>{console.log(error)})
         }
     }, [errors]);
     return(
@@ -55,7 +59,7 @@ function Forgotpassw(){
                 <label className="label">Enter UserId</label>
                <div className="imag">
                 <img src={psswd} alt="" />
-                <input className="inputfield"type="text" name="userid" onChange={handleChange} value={confrmuserid.userid} placeholder="Confirm Your UserId"/>
+                <input className="inputfield"type="text" autoComplete="off" name="userid" onChange={handleChange} value={confrmuserid.userid} placeholder="Confirm Your UserId"/>
                 </div> 
             </div>
             {errors.userid && <p className="error">{errors.userid}</p>}

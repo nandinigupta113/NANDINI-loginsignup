@@ -2,8 +2,8 @@ import axios from "axios";
 import react,{useState ,useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "../assets/Otpverify.css"
-
-function Otpverif(){
+window.onunload = function() {debugger;}
+function Otpverif(props){
     const navigate = useNavigate();
     const [dataIsCorrect, setDataIsCorrect] = useState(false);
     const [submitform, setSubmitForm] = useState(false);
@@ -46,9 +46,10 @@ function Otpverif(){
     }
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
-            axios.get(`/otp-send?phonenumber=917818052057&channel=${parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp3)}`)
-            .then(response => {console.log(response.data)});  
-            setSubmitForm(true);
+            if(parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp4) === props.otpchk){
+                 setSubmitForm(true);
+                }
+            else{console.log("not verified", parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp4), props.otpchk)}
         }
     }, [errors]);
 

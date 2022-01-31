@@ -4,6 +4,8 @@ import Recaptcha from "react-recaptcha";
 import "../assets/Login.css";
 import react,{useState ,useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+window.onunload = function() {debugger;}
 
 function Login(){
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ function Login(){
         return errors;
     }
 
-
+    
     const [isverified, setisVerified] = useState({
         isverify: false,
         password:"",
@@ -41,11 +43,18 @@ function Login(){
         setDataIsCorrect(true);
     }
 
+
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
-            setSubmitForm(true);
+            axios.post("/login", {
+               email : isverified.userid,
+               password : isverified.password
+            })
+                .then(response => {if(response.data){setSubmitForm(true)}console.log(response.data)})
+                .catch(error =>{console.log(error)})
+                 }
             // props.setLoggedIn(true);
-        }
+
        }, [errors]);
     
 
@@ -60,12 +69,12 @@ function Login(){
     var callback = () => {
         console.log("captcha loaded")
     };
-    var verifyCallback = (response) => {            
+    var verifyCallback = (response, event) => {       
         setisVerified({
            ...isverified,
                 isverify : true
             })
-    };
+        };
 
     return(
         <div className="box">
@@ -84,7 +93,7 @@ function Login(){
                 <label className="label">Password</label>
                <div className="imag">
                 <img src={psswd} alt="" />
-                <input className="inputfield" autoComplete="off" name="password" onChange={handleChange} value={isverified.password} type="text"placeholder="Enter password"/>
+                <input className="inputfield" autoComplete="off" name="password" onChange={handleChange} value={isverified.password} type="password"placeholder="Enter password"/>
                 </div> 
             </div>
             {errors.password && <p className="error">{errors.password}</p>}

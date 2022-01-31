@@ -1,15 +1,18 @@
 import react,{useState ,useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import validation from "./validation";
+import Otpverif from "./Otpverif";
 import Recaptcha from "react-recaptcha";
 import "../assets/Signup.css"
 import axios from 'axios';
-window.onunload = function() { debugger; }
+window.onunload = function() {debugger;}
 function Signup() {
-
     const navigate = useNavigate();
     const [dataIsCorrect, setDataIsCorrect] = useState(false);
+    // const [signupdata, setSignUpData] = useState({});
     const [submitform, setSubmitForm] = useState(false);
+    const [otpchk, setOtpChk] = useState();
+    <Otpverif otpchk={otpchk}/>
     const [values, setValues] = useState({
         name:"",
         email: "",
@@ -38,7 +41,6 @@ function Signup() {
     }
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
-            setSubmitForm(true);
             axios.post("/register", {
                 name: values.name,
                 email: values.email,
@@ -51,9 +53,13 @@ function Signup() {
                 gen:values.gen,
                 confirmpassword:values.confirmpassword
             })
-                .then(response => {console.log(response.data)});  
-             axios.get("/otp-send?phonenumber=917818052057&channel=sms")
-                .then(response => {console.log(response.data)});   
+                .then(response => {
+                    setSubmitForm(true);
+                    console.log(response.data);
+                    console.log(response.data.otp_val);
+                    setOtpChk({add : response.data.otp_val})
+                })
+                .catch(error =>{console.log(error)})
         }
     }, [errors]);
 
@@ -62,11 +68,12 @@ function Signup() {
     var callback = () => {
         console.log("captcha loaded")
     };
-    var verifyCallback = (response) => {       
+    var verifyCallback = (response,event) => {    
         setValues({
            ...values,
                 isverify : true
             })
+        event.preventDefault();   
     };
 
     return (
