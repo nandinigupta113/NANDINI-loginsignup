@@ -7,10 +7,9 @@ function Home(){
       <div className="navbar">
         <div className="logo"><img src={csilogo} alt="" /></div>
         <div className="side">
-          <div><Link
-           to={"/home"}>Home</Link></div>
-          <div><Link to={"/dashboard"}>Dashboard</Link></div>
-          <div><Link to={"/"}>Logout</Link></div>
+          <div><Link style={{color: "white",textDecoration: "none"}} to={"/home"}>Home</Link></div>
+          <div><Link style={{color: "white",textDecoration: "none"}} to={"/dashboard"}>Dashboard</Link></div>
+          <div><Link style={{color: "white",textDecoration: "none"}} to={"/"}>Logout</Link></div>
         </div>
       </div>
       <div className="box3">
@@ -20,7 +19,7 @@ function Home(){
         <div className="mainhead">
           <h1>Home Page</h1>
         </div>
-        <div className="mainhead">
+        <div id="ani">
           <h2 className="logo"><img src={csilogo} alt="" /> Team CSI</h2>
         </div>
       </div>

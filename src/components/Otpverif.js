@@ -3,10 +3,13 @@ import react,{useState ,useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "../assets/Otpverify.css"
 window.onunload = function() {debugger;}
+
 function Otpverif(props){
     const navigate = useNavigate();
     const [dataIsCorrect, setDataIsCorrect] = useState(false);
-    const [submitform, setSubmitForm] = useState(false);
+    const [result, setResult] = useState({
+        otp: ""
+    });
 
     const validation =(isotp) => {
         let errors = {};
@@ -44,12 +47,29 @@ function Otpverif(props){
         setErrors(validation(isotp));
         setDataIsCorrect(true);
     }
-    useEffect(() => {
+    useEffect(() => {  
+
         if(Object.keys(errors).length === 0 && dataIsCorrect){
-            if(parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp4) === props.otpchk){
-                 setSubmitForm(true);
-                }
-            else{console.log("not verified", parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp4), props.otpchk)}
+            axios.get("/register")  
+            .then(response => {
+                const data = response.data[response.data.length - 1]
+                console.log(data);
+                console.log(data.otp_val);
+                const res = data.otp_val;
+                setResult({
+                   otp: res
+                });
+                console.log(result)
+            })
+            .catch(error =>{console.log(error)})
+            var val = parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp4);
+            if( val === result.otp){
+                    navigate("/home");
+                    }
+
+            // if(parseFloat(parseInt(isotp.otp1)*1000 + parseInt(isotp.otp2)*100 +parseInt(isotp.otp3)*10 +parseInt(isotp.otp4)) === props.otpchk){
+            //      setSubmitForm(true);
+            //     }
         }
     }, [errors]);
 
@@ -76,9 +96,9 @@ function Otpverif(props){
             {errors.otp1 || errors.otp2 || errors.otp3 || errors.otp4 && <p>{errors.otp1}</p>}
             </div>
             <div className="resend">
-                <h2 className="rsnd">Resend OTP?</h2>
+              <h2 className="rsnd">Resend OTP?</h2>
             </div>
-            <button className="bttns2"onClick={submitform ? navigate("/home") : handleFormSubmit}>Verify & Proceed</button>
+            <button className="bttns2"onClick={handleFormSubmit}>Verify & Proceed</button>
         </div>
     )
 }

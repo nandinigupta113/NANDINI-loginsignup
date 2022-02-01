@@ -10,7 +10,7 @@ window.onunload = function() {debugger;}
 function Login(){
     const navigate = useNavigate();
     const [dataIsCorrect, setDataIsCorrect] = useState(false);
-    const [submitform, setSubmitForm] = useState(false);
+    // const [submitform, setSubmitForm] = useState(false);
 
     const validation =(isverified) => {
         let errors = {};
@@ -20,15 +20,15 @@ function Login(){
         if(!isverified.password){
             errors.password = "Password is required!"
         }
-        if(isverified.isverify === false){
-            errors.isverify = "checking captcha is required!"
-        }
+        // if(isverified.isverify === false){
+        //     errors.isverify = "checking captcha is required!"
+        // }
         return errors;
     }
 
-    
+
     const [isverified, setisVerified] = useState({
-        isverify: false,
+        // isverify: false,
         password:"",
         userid:"",
     });
@@ -50,9 +50,13 @@ function Login(){
                email : isverified.userid,
                password : isverified.password
             })
-                .then(response => {if(response.data){setSubmitForm(true)}console.log(response.data)})
+                .then(response => {if(response.data){
+                    navigate("/home");
+                    console.log(response.data);
+                    localStorage.setItem(response.data.id._id, response.data.token);
+                }})
                 .catch(error =>{console.log(error)})
-                 }
+      }
             // props.setLoggedIn(true);
 
        }, [errors]);
@@ -69,11 +73,12 @@ function Login(){
     var callback = () => {
         console.log("captcha loaded")
     };
-    var verifyCallback = (response, event) => {       
-        setisVerified({
-           ...isverified,
-                isverify : true
-            })
+    var verifyCallback = (response, event) => {  
+        event.preventDefault();    
+        // setisVerified({
+        //    ...isverified,
+        //         isverify : true
+        //     })
         };
 
     return(
@@ -98,7 +103,7 @@ function Login(){
             </div>
             {errors.password && <p className="error">{errors.password}</p>}
             <div className="forgot">
-                <Link to="/forgotpassw">Forgot Password?</Link>
+                <Link style={{color:"#6B6B6B", textDecoration:"none"}}to="/forgotpassw">Forgot Password?</Link>
             </div>
             <div className="captcha">
                <Recaptcha
@@ -109,7 +114,7 @@ function Login(){
               />
             </div>
             {isverified.isverify === false && <p className="error">{errors.isverify}</p>}
-            <button className="bttns"onClick={submitform ? navigate("/home") : handleFormSubmit}>Login</button>
+            <button className="bttns"onClick={handleFormSubmit}>Login</button>
             <button className="bttns" onClick={() => navigate("/Signup")}>Sign Up</button>
         </form>
         </div>

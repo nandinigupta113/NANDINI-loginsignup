@@ -1,6 +1,5 @@
 
-
-.logo img{
+.home img{
     height:4rem;
 }
 .side{
@@ -20,7 +19,7 @@
 .navbar{
     display: flex;
     justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.33);
+    background-color: rgba(0, 0, 0, 0.5);
     color:white;
 }
 .box3{
@@ -40,4 +39,25 @@
 }
 .mainhead h2{
  margin-top:2rem;
+}
+.home{
+    overflow: hidden;
+}
+#ani{
+    position:relative;
+    left: 14rem;
+    font-size: 1.5rem;
+    animation-name:logggo;
+    animation-duration:  5s;
+    animation-delay:  1s;
+    animation-iteration-count:  1;
+    animation-fill-mode:forwards;
+}
+@keyframes logggo{
+    0%{
+        bottom:-20rem;
+    }
+    100%{
+        bottom:0.4rem;
+    }
 }

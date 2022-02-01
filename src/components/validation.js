@@ -23,9 +23,9 @@ const validation =(values) => {
     if(!values.address){
         errors.address = "Address is required"
     }
-    if(values.isverify === false){
-        errors.isverify = "checking captcha is required!"
-    }
+    // if(values.isverify === false){
+    //     errors.isverify = "checking captcha is required!"
+    // }
     if(!values.confirmpassword){
         errors.confirmpassword = "Password Confirmation is required";
     } else if(values.confirmpassword !== values.password ){

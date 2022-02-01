@@ -6,13 +6,13 @@ import Recaptcha from "react-recaptcha";
 import "../assets/Signup.css"
 import axios from 'axios';
 window.onunload = function() {debugger;}
+
 function Signup() {
     const navigate = useNavigate();
     const [dataIsCorrect, setDataIsCorrect] = useState(false);
-    // const [signupdata, setSignUpData] = useState({});
-    const [submitform, setSubmitForm] = useState(false);
-    const [otpchk, setOtpChk] = useState();
-    <Otpverif otpchk={otpchk}/>
+    // const [otpchk, setOtpChk] = useState("");
+    // <Otpverif otpchk={otpchk}/>
+
     const [values, setValues] = useState({
         name:"",
         email: "",
@@ -23,7 +23,7 @@ function Signup() {
         year:"1 year",
         branch:"Computer Science",
         gen:"Male",
-        isverify: false,
+        // isverify: false,
         confirmpassword: "",
     });
 
@@ -41,7 +41,7 @@ function Signup() {
     }
     useEffect(() => {
         if(Object.keys(errors).length === 0 && dataIsCorrect){
-            axios.post("/register", {
+        axios.post("/register", {
                 name: values.name,
                 email: values.email,
                 rollnum:parseInt(values.rollnum),
@@ -54,12 +54,11 @@ function Signup() {
                 confirmpassword:values.confirmpassword
             })
                 .then(response => {
-                    setSubmitForm(true);
+                    navigate("/otpverify");
                     console.log(response.data);
                     console.log(response.data.otp_val);
-                    setOtpChk({add : response.data.otp_val})
                 })
-                .catch(error =>{console.log(error)})
+                .catch(error =>{console.log(error)});
         }
     }, [errors]);
 
@@ -69,10 +68,10 @@ function Signup() {
         console.log("captcha loaded")
     };
     var verifyCallback = (response,event) => {    
-        setValues({
-           ...values,
-                isverify : true
-            })
+        // setValues({
+        //    ...values,
+        //         isverify : true
+        //     })
         event.preventDefault();   
     };
 
@@ -157,7 +156,7 @@ function Signup() {
               {errors.password && <p className="error">{errors.password}</p>}
           </div>
         
-          <button className="bttns" onClick={submitform ? navigate("/otpverify") : handleFormSubmit}>Sign Up</button>
+          <button className="bttns" onClick={handleFormSubmit}>Sign Up</button>
       </form>
     </div>
     );
